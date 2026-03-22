@@ -10,23 +10,14 @@ class YalexParser:
         self.lets = {}
         self.rules = []
 
-    # =============================
-    # 🔹 Lectura del archivo
-    # =============================
     def read_file(self):
         with open(self.filepath, "r", encoding="utf-8") as f:
             self.content = f.read()
 
-    # =============================
-    # 🔹 Eliminar comentarios (* *)
-    # =============================
     def remove_comments(self):
         pattern = r'\(\*.*?\*\)'
         self.content = re.sub(pattern, '', self.content, flags=re.DOTALL)
 
-    # =============================
-    # 🔹 Extraer bloques { }
-    # =============================
     def extract_brace_blocks(self):
         blocks = []
         stack = []
@@ -50,24 +41,17 @@ class YalexParser:
         if not blocks:
             return
 
-        # header = primer bloque
         h_start, h_end = blocks[0]
         self.header = self.content[h_start+1:h_end].strip()
 
-        # trailer = último bloque (si hay más de uno)
         if len(blocks) > 1:
             t_start, t_end = blocks[-1]
             self.trailer = self.content[t_start+1:t_end].strip()
 
-            # eliminar trailer del contenido
             self.content = self.content[:t_start]
 
-        # eliminar header del contenido
         self.content = self.content[h_end+1:]
 
-    # =============================
-    # 🔹 Extraer LETS
-    # =============================
     def extract_lets(self):
         let_pattern = re.compile(r'let\s+(\w+)\s*=\s*(.+)')
 
@@ -87,9 +71,6 @@ class YalexParser:
 
         self.content = "\n".join(new_lines)
 
-    # =============================
-    # 🔹 Extraer RULES correctamente
-    # =============================
     def extract_rules(self):
         match = re.search(r'rule\s+\w+.*?=\s*(.*)', self.content, re.DOTALL)
         if not match:
@@ -116,12 +97,10 @@ class YalexParser:
         if current.strip():
             rules.append(current.strip())
 
-        # procesar cada regla
         for rule in rules:
             self._parse_rule(rule)
 
     def _parse_rule(self, text):
-        # busca el primer { que no esté dentro de nada raro
         idx = text.find('{')
         if idx == -1:
             return
@@ -135,13 +114,9 @@ class YalexParser:
                 "action": action
             })
 
-    # =============================
-    # 🔹 Resolver LETS correctamente
-    # =============================
     def resolve_lets(self):
         changed = True
 
-        # repetir hasta que ya no haya cambios (por si hay lets dentro de lets)
         while changed:
             changed = False
 
@@ -154,9 +129,6 @@ class YalexParser:
                         rule["regex"] = new_regex
                         changed = True
 
-    # =============================
-    # 🔹 Validaciones útiles
-    # =============================
     def validate(self):
         if not self.rules:
             raise ValueError("No se encontraron reglas")
@@ -165,9 +137,6 @@ class YalexParser:
             if not r["regex"]:
                 raise ValueError("Regla con regex vacío")
 
-    # =============================
-    # 🔹 Pipeline completo
-    # =============================
     def parse(self):
         self.read_file()
         self.remove_comments()
@@ -184,10 +153,6 @@ class YalexParser:
             "rules": self.rules
         }
 
-
-# =============================
-# 🔥 TEST
-# =============================
 if __name__ == "__main__":
     parser = YalexParser("lexer.yal")
     result = parser.parse()
