@@ -1,0 +1,22 @@
+{
+import tokens
+}
+
+(* Comentarios de prueba *)
+let digit = ['0'-'9']
+let letter = ['a'-'z' 'A'-'Z']
+let id = letter (letter | digit)*
+
+rule gettoken =
+    [' ' '\t' '\n']+   { /* skip */ }
+  | id                 { return ID }
+  | digit+             { return NUMBER }
+  | "if"               { return IF }
+  | "else"             { return ELSE }
+  | "while"            { return WHILE }
+  | "=="               { return EQ }
+  | "="                { return ASSIGN }
+
+{
+# fin
+}
