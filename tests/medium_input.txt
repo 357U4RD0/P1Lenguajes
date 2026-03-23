@@ -1,0 +1,7 @@
+int x = 5
+float y = 3.14
+if x == 5 return y
+while x != 0 x = x - 1
+int resultado = x * 2 + 3
+float promedio = y / 2
+return resultado

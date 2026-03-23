@@ -1,0 +1,17 @@
+(* Lexer de baja complejidad *)
+
+let delimitador = [' ''\t''\n']
+let espacio     = delimitador+
+let digito      = ['0'-'9']
+let numero      = digito+
+let letra       = ['a'-'z''A'-'Z']
+let id          = letra (letra | digito)*
+
+rule tokens =
+    espacio   { }
+  | id        { return ID }
+  | numero    { return NUMBER }
+  | '+'       { return PLUS }
+  | '-'       { return MINUS }
+  | '*'       { return TIMES }
+  | '='       { return ASSIGN }

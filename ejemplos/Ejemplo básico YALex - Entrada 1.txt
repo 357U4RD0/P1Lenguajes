@@ -1,0 +1,15 @@
+variable   + 5 *		-11 = otraVariable + 2
+variable3
+
+(* Salida:
+Identificador
+Operador de suma
+Número
+Operador de multiplicación
+Número
+Operador de asignación
+Identificador
+Operador de suma
+Número
+Identificador
+*)

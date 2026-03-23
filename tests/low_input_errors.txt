@@ -1,0 +1,4 @@
+variable + 5 * 11 = otraVariable + 2
+var @ 4
+x = y # z
+resultado $ 10

@@ -1,0 +1,59 @@
+(* Lexer de alta complejidad MODIFICADO: agrega switch, case, break, ++ y -- *)
+
+let delimitador = [' ''\t''\r''\n']
+let espacio     = delimitador+
+let digito      = ['0'-'9']
+let numero      = digito+
+let flotante    = digito+ '.' digito+
+let letra       = ['a'-'z''A'-'Z']
+let id          = letra (letra | digito | '_')*
+
+rule tokens =
+    espacio              { }
+  | "true"               { return BOOL_TRUE }
+  | "false"              { return BOOL_FALSE }
+  | "if"                 { return IF }
+  | "else"               { return ELSE }
+  | "while"              { return WHILE }
+  | "for"                { return FOR }
+  | "switch"             { return SWITCH }
+  | "case"               { return CASE }
+  | "break"              { return BREAK }
+  | "return"             { return RETURN }
+  | "int"                { return INT }
+  | "float"              { return FLOAT_TYPE }
+  | "bool"               { return BOOL_TYPE }
+  | "string"             { return STRING_TYPE }
+  | "null"               { return NULL }
+  | id                   { return ID }
+  | flotante             { return FLOAT_LIT }
+  | numero               { return NUMBER }
+  | '"' [^'"']* '"'      { return STRING_LIT }
+  | "=="                 { return EQ }
+  | "!="                 { return NEQ }
+  | "<="                 { return LEQ }
+  | ">="                 { return GEQ }
+  | "&&"                 { return AND }
+  | "||"                 { return OR }
+  | "++"                 { return INC }
+  | "--"                 { return DEC }
+  | '!'                  { return NOT }
+  | '<'                  { return LT }
+  | '>'                  { return GT }
+  | '='                  { return ASSIGN }
+  | "+="                 { return PLUS_EQ }
+  | "-="                 { return MINUS_EQ }
+  | '+'                  { return PLUS }
+  | '-'                  { return MINUS }
+  | '*'                  { return TIMES }
+  | '/'                  { return DIV }
+  | '%'                  { return MOD }
+  | '('                  { return LPAREN }
+  | ')'                  { return RPAREN }
+  | '{'                  { return LBRACE }
+  | '}'                  { return RBRACE }
+  | '['                  { return LBRACKET }
+  | ']'                  { return RBRACKET }
+  | ','                  { return COMMA }
+  | ';'                  { return SEMI }
+  | ':'                  { return COLON }

@@ -1,0 +1,11 @@
+int contador = 0
+float promedio = 3.14
+bool activo = true
+
+if activo && contador <= 10 {
+    contador += 1@
+    promedio = promedio + 2.5
+}
+
+int resultado = contador # promedio
+bool check = activo $$ false || true

@@ -1,0 +1,39 @@
+(* Lexer de complejidad media MODIFICADO: agrega for, print, bool y literales booleanos *)
+
+let delimitador = [' ''\t''\n']
+let espacio     = delimitador+
+let digito      = ['0'-'9']
+let numero      = digito+
+let flotante    = digito+ '.' digito+
+let letra       = ['a'-'z''A'-'Z']
+let id          = letra (letra | digito | '_')*
+
+rule tokens =
+    espacio        { }
+  | "if"           { return IF }
+  | "else"         { return ELSE }
+  | "while"        { return WHILE }
+  | "for"          { return FOR }
+  | "return"       { return RETURN }
+  | "print"        { return PRINT }
+  | "int"          { return INT }
+  | "float"        { return FLOAT_TYPE }
+  | "bool"         { return BOOL_TYPE }
+  | "true"         { return BOOL_TRUE }
+  | "false"        { return BOOL_FALSE }
+  | id             { return ID }
+  | flotante       { return FLOAT_LIT }
+  | numero         { return NUMBER }
+  | "=="           { return EQ }
+  | "!="           { return NEQ }
+  | '<'            { return LT }
+  | '>'            { return GT }
+  | '='            { return ASSIGN }
+  | '+'            { return PLUS }
+  | '-'            { return MINUS }
+  | '*'            { return TIMES }
+  | '/'            { return DIV }
+  | '('            { return LPAREN }
+  | ')'            { return RPAREN }
+  | ','            { return COMMA }
+  | ';'            { return SEMI }

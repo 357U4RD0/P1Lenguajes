@@ -1,0 +1,4 @@
+variable + 5 * 11 = otraVariable + 2
+x = y + z * 3
+a = b - 4
+resultado = 10 * 2 + 3
